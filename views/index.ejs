@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>To-Do List</h1>
+            <button id="toggle-dark-mode">Dark Mode</button>
+        </header>
+        
+        <form action="/addtask" method="POST" class="task-form">
+            <input type="text" name="newtask" placeholder="Add a new task" required>
+            <select name="category">
+                <option value="General">General</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Urgent">Urgent</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <input type="text" id="search-bar" placeholder="Search tasks...">
+
+        <ul id="task-list">
+            <% tasks.forEach((task) => { %>
+                <li>
+                    <form action="/removetask" method="POST" class="task-actions">
+                        <input type="hidden" name="task" value="<%= task.name %>">
+                        <button type="submit" class="delete-button">❌</button>
+                    </form>
+                    <form action="/edittask" method="POST" class="task-actions">
+                        <input type="hidden" name="oldName" value="<%= task.name %>">
+                        <input type="text" name="newName" value="<%= task.name %>" required>
+                        <button type="submit" class="edit-button">✏️</button>
+                    </form>
+                    <span class="category"><%= task.category %></span>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
